@@ -50,7 +50,7 @@ const PlaceOrder = (props) => {
             console.log("Clicked")
         }
         else {
-            fetch('https://api.jsonbin.io/b/61b788c701558c731cd39fcb/1', {          // Orders URL
+            fetch('https://jsonkeeper.com/b/PDXB', {          // Orders URL
             method: 'POST',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(burgerDetails),

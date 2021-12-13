@@ -12,7 +12,7 @@ const Orders = (props) => {
     
     var orderListItems;
     useEffect(() => {
-        fetch('https://api.jsonbin.io/b/61b788c701558c731cd39fcb/1')   // Order URL
+        fetch('https://jsonkeeper.com/b/PDXB')   // Order URL
         .then((response) => {
             if(!response.ok) {
                 throw Error("Network Error...");
@@ -34,7 +34,7 @@ const Orders = (props) => {
 
     const orderDeleteHandler = (orderID) => {
         orderListData.pop(orderListData.find(order => order.id === orderID));
-        fetch('https://api.jsonbin.io/b/61b788c701558c731cd39fcb/1' + orderID, {
+        fetch('https://jsonkeeper.com/b/PDXB' + orderID, {
             method: 'DELETE',
         }).then(() => {
             window.location.reload(true);
