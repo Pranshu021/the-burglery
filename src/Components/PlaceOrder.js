@@ -30,7 +30,7 @@ const PlaceOrder = (props) => {
         isCustom = true;
     }
 
-    burgerPrice = useFetchPrice('https://api.jsonbin.io/b/61b767380ddbee6f8b1c90f7/1', burgerName); // Burgers url
+    burgerPrice = useFetchPrice('https://jsonkeeper.com/b/50FK', burgerName); // Burgers url
 
     const HandleSubmit = (event) => {
         event.preventDefault();
@@ -52,7 +52,10 @@ const PlaceOrder = (props) => {
         else {
             fetch('https://jsonkeeper.com/b/PDXB', {          // Orders URL
             method: 'POST',
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+        },
             body: JSON.stringify(burgerDetails),
         }).then((response) => {
             if(location.pathname.includes("/custom")) {
