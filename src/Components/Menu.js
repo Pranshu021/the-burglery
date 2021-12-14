@@ -4,7 +4,7 @@ import useFetch from '../hooks/useFetch';
 import {useState, useEffect} from 'react';
 
 const Menu = (props) => {
-    const {data:burgerData, isLoading,  isError: error} = useFetch('https://jsonkeeper.com/b/50FK');   //Burger URL
+    const {data:burgerData, isLoading,  isError: error} = useFetch('https://api.jsonbin.io/b/61b767380ddbee6f8b1c90f7/1');   //Burger URL
     // const {data:burgerData, isLoading,  isError: error} = useFetch('http://localhost:8000/burgers');
 
     return (

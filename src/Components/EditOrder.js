@@ -29,7 +29,7 @@ const EditOrder = (props) => {
 
     const HandleCustomOrder = (event) => {
         event.preventDefault();
-        fetch('https://jsonkeeper.com/b/PDXB' + customOrder.orderid, {  //Order URL
+        fetch('https://api.jsonbin.io/b/61b788c701558c731cd39fcb/1' + customOrder.orderid, {  //Order URL
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
