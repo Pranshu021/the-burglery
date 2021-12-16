@@ -11,6 +11,19 @@
       ],
       "total_amount": 110,
       "addons_amount": 20
+    },
+
+    {
+      "id": 671823,
+      "customer_name": "Sweet Sting",
+      "customer_phone": "8683873338",
+      "orderName": "Egg Burger",
+      "orderTime": "2021-12-16 02:47:58",
+      "addons": [
+        "Sprite"
+      ],
+      "total_amount": 80,
+      "addons_amount": 40
     }
   ],
   "burgers": [

@@ -29,8 +29,8 @@ const EditOrder = (props) => {
 
     const HandleCustomOrder = (event) => {
         event.preventDefault();
-        fetch('https://api.jsonbin.io/b/61b788c701558c731cd39fcb/1' + customOrder.orderid, {  //Order URL
-            method: 'PATCH',
+        fetch('https://fairestdb.p.rapidapi.com/orders/orders/id/' + customOrder.orderid, {  //Order URL
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 addons: addonsList,

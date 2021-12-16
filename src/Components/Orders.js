@@ -12,7 +12,13 @@ const Orders = (props) => {
     
     var orderListItems;
     useEffect(() => {
-        fetch('https://api.jsonbin.io/b/61b788c701558c731cd39fcb/1')   // Order URL
+        fetch('https://fairestdb.p.rapidapi.com/orders/orders', {
+            headers: {
+                'content-type': 'application/json',
+                'x-rapidapi-host': 'fairestdb.p.rapidapi.com',
+                'x-rapidapi-key': '98dbf58e7fmshba5aeeccf52e631p1aa2a6jsn6cbcf04b7f7f'
+              }
+        })   // Order URL
         .then((response) => {
             if(!response.ok) {
                 throw Error("Network Error...");
@@ -34,8 +40,13 @@ const Orders = (props) => {
 
     const orderDeleteHandler = (orderID) => {
         orderListData.pop(orderListData.find(order => order.id === orderID));
-        fetch('https://api.jsonbin.io/b/61b788c701558c731cd39fcb/1' + orderID, {
+        const apiOrder = orderListData.find(order => order.id === orderID);
+        fetch('https://fairestdb.p.rapidapi.com/orders/orders/orders/' + apiOrder._id, {
             method: 'DELETE',
+            headers: {
+                'x-rapidapi-host': 'fairestdb.p.rapidapi.com',
+                'x-rapidapi-key': '98dbf58e7fmshba5aeeccf52e631p1aa2a6jsn6cbcf04b7f7f'
+              },
         }).then(() => {
             window.location.reload(true);
             // navigate('/orders')
@@ -54,9 +65,9 @@ const Orders = (props) => {
                 <div className="col-sm-6 order-details">
                     <p>
                     Order ID : <b>{order.id} </b><br />
-                    Customer Name : <b>{order.customer_name}</b><br />
+                    Customer Name : <b>{order.customername}</b><br />
                     Order : <b>{order.orderName}</b><br />
-                    Amount : <b>₹ {order.total_amount + order.addons_amount}</b><br />
+                    Amount : <b>₹ {order.totalamount + order.addonsamount}</b><br />
                     Time : <b>{order.orderTime}</b><br />
                     Addons : <b>{order.addons.length > 0 ? "" +  order.addons : "None"}</b>
                     </p>

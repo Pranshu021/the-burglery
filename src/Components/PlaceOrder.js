@@ -50,12 +50,14 @@ const PlaceOrder = (props) => {
             console.log("Clicked")
         }
         else {
-            fetch('https://api.jsonbin.io/b/61b788c701558c731cd39fcb/1', {          // Orders URL
+            // fetch('https://api.jsonbin.io/b/61b788c701558c731cd39fcb/1', {          // Orders URL
+            fetch('https://fairestdb.p.rapidapi.com/orders/orders', {
             method: 'POST',
-            headers: {"Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-        },
+            headers: {
+                'content-type': 'application/json',
+                'x-rapidapi-host': 'fairestdb.p.rapidapi.com',
+                'x-rapidapi-key': '98dbf58e7fmshba5aeeccf52e631p1aa2a6jsn6cbcf04b7f7f'
+              },
             body: JSON.stringify(burgerDetails),
         }).then((response) => {
             if(location.pathname.includes("/custom")) {
@@ -63,7 +65,7 @@ const PlaceOrder = (props) => {
                 navigate("/order/edit/" + burgerName);
             }
             else {
-                if(response.status == 201) {
+                if(response.status == 200) {
                     changeOrderState("placed");
                     console.log("Order Placed")
                 }
