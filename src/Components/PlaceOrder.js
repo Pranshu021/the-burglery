@@ -17,13 +17,14 @@ const PlaceOrder = (props) => {
     const [orderPlaced, changeOrderState] = useState("nothing");
 
     const [burgerDetails, setBurgerDetails] = useState({
-        id : Math.floor(Math.random() * 1000000),
+        orderid: Math.floor(Math.random() * 1000000),
         customer_name : null,
         customer_phone : null,
-        orderName : burgerName,
-        orderTime : null, 
+        ordername : burgerName,
+        ordertime : null, 
         addons : [],
-        total_amount: 0 
+        total_amount: 0,
+        key: ""
     });
 
     if(location.pathname.includes('/custom')){
@@ -39,7 +40,7 @@ const PlaceOrder = (props) => {
         const customerName = document.getElementById("customer_name").value;
         const quantity = document.getElementById("quantity").value;
         const customerPhone = document.getElementById("customer_phone").value;
-        setBurgerDetails({...burgerDetails, orderTime: dateorderTime, customer_name: customerName, customer_phone: customerPhone, total_amount: burgerPrice * quantity});
+        setBurgerDetails({...burgerDetails, ordertime: dateorderTime, customername: customerName, customerphone: customerPhone, totalamount: burgerPrice * quantity, key:burgerDetails.orderid+""});
         changeSubmitState(true);
         document.getElementById("submit-button").disabled = true;
         
@@ -51,7 +52,7 @@ const PlaceOrder = (props) => {
         }
         else {
             // fetch('https://api.jsonbin.io/b/61b788c701558c731cd39fcb/1', {          // Orders URL
-            fetch('https://fairestdb.p.rapidapi.com/orders/orders', {
+            fetch('https://fairestdb.p.rapidapi.com/ordersdb/ordersList', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -61,7 +62,7 @@ const PlaceOrder = (props) => {
             body: JSON.stringify(burgerDetails),
         }).then((response) => {
             if(location.pathname.includes("/custom")) {
-                dispatch({type: 'CUSTOM', orderid: burgerDetails.id});
+                dispatch({type: 'CUSTOM', orderid: burgerDetails.orderid});
                 navigate("/order/edit/" + burgerName);
             }
             else {

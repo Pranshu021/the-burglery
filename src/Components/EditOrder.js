@@ -12,7 +12,7 @@ const EditOrder = (props) => {
     let orderSubmit;
     let addOnsCost=0;
     const navigate = useNavigate();
-    const customOrder = useSelector(state => state.isCustomOrder);
+    const order_id = useSelector(state => state.isCustomOrder.orderid);
     const [addOnState, changeAddOnState] = useState({
         Cheese: false,
         Grilled: false,
@@ -25,16 +25,39 @@ const EditOrder = (props) => {
     })
 
     const [orderPlaced, changeOrderState] = useState("nothing");
+    const [orderListData, setOrderListData] = useState([]);
+    let apiOrderID;
+    console.log(order_id)
+
+    useEffect(() => {
+        fetch('https://fairestdb.p.rapidapi.com/ordersdb/ordersList/key/' + order_id, {
+            headers: {
+                'x-rapidapi-host': 'fairestdb.p.rapidapi.com',
+                'x-rapidapi-key': '98dbf58e7fmshba5aeeccf52e631p1aa2a6jsn6cbcf04b7f7f'
+              }
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data)
+            setOrderListData(data);
+        })
+    }, [])
 
 
     const HandleCustomOrder = (event) => {
         event.preventDefault();
-        fetch('https://fairestdb.p.rapidapi.com/orders/orders/id/' + customOrder.orderid, {  //Order URL
+        console.log("Edit Order")
+            fetch('https://fairestdb.p.rapidapi.com/ordersdb/ordersList', {  //Order URL
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'content-type': 'application/json',
+                'x-rapidapi-host': 'fairestdb.p.rapidapi.com',
+                'x-rapidapi-key': '98dbf58e7fmshba5aeeccf52e631p1aa2a6jsn6cbcf04b7f7f'
+              },
             body: JSON.stringify({
-                addons: addonsList,
-                addons_amount : addOnsCost
+                _id: orderListData[0]._id,
+                addons: addonsList.join(),
+                addonsamount: addOnsCost
             })
         }).then((response) => {
             if(response.status == 200) {
@@ -48,12 +71,11 @@ const EditOrder = (props) => {
                 navigate('/');
             }, 1000);
         })
+        
     }
 
     const addOnSelectionHandler = (event) => {
         const addOnName = event.target.id;
-        console.log(event.target.id)
-        console.log(!addOnState[addOnName])
         changeAddOnState({...addOnState, [addOnName]: !addOnState[addOnName]});
     }
 

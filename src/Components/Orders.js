@@ -12,7 +12,7 @@ const Orders = (props) => {
     
     var orderListItems;
     useEffect(() => {
-        fetch('https://fairestdb.p.rapidapi.com/orders/orders', {
+        fetch('https://fairestdb.p.rapidapi.com/ordersdb/ordersList', {
             headers: {
                 'content-type': 'application/json',
                 'x-rapidapi-host': 'fairestdb.p.rapidapi.com',
@@ -37,11 +37,11 @@ const Orders = (props) => {
             setErrorState(error.message);
         });
     }, []);
-
+    let apiOrder;
     const orderDeleteHandler = (orderID) => {
-        orderListData.pop(orderListData.find(order => order.id === orderID));
-        const apiOrder = orderListData.find(order => order.id === orderID);
-        fetch('https://fairestdb.p.rapidapi.com/orders/orders/orders/' + apiOrder._id, {
+        apiOrder = orderListData.splice(orderListData.indexOf(orderListData.find(order => order.orderid === orderID)), 1);
+        console.log(apiOrder[0]._id);
+        fetch('https://fairestdb.p.rapidapi.com/ordersdb/ordersList/_id/' + apiOrder[0]._id, {
             method: 'DELETE',
             headers: {
                 'x-rapidapi-host': 'fairestdb.p.rapidapi.com',
@@ -49,13 +49,12 @@ const Orders = (props) => {
               },
         }).then(() => {
             window.location.reload(true);
-            // navigate('/orders')
         })
     }
 
     const handleModify = (order) => {
-        dispatch({type: 'CUSTOM', orderid: order.id})
-        navigate('/order/' + order.id + '/modify')
+        dispatch({type: 'CUSTOM', orderid: order.orderid})
+        navigate('/order/' + order.orderid + '/modify')
     }
 
 
@@ -64,19 +63,20 @@ const Orders = (props) => {
             <div className="row order-item-row" key={order.id}>
                 <div className="col-sm-6 order-details">
                     <p>
-                    Order ID : <b>{order.id} </b><br />
+                    Order ID : <b>{order.orderid} </b><br />
                     Customer Name : <b>{order.customername}</b><br />
-                    Order : <b>{order.orderName}</b><br />
-                    Amount : <b>₹ {order.totalamount + order.addonsamount}</b><br />
-                    Time : <b>{order.orderTime}</b><br />
+                    Order : <b>{order.ordername}</b><br />
+                    Amount : <b> {order.totalamount + order.addonsamount}</b><br />
+                    Time : <b>{order.ordertime}</b><br />
                     Addons : <b>{order.addons.length > 0 ? "" +  order.addons : "None"}</b>
+                    {/* Addons : <b>{order.addons}</b> */}
                     </p>
                 </div>  
                 <div className="col-sm-6 order-control-buttons">
                     <button className="btn btn-outline-danger order-page-buttons" onClick={() => orderDeleteHandler(order.id)}>Delete Order</button>
                     <button className="btn btn-outline-danger order-page-buttons" onClick={() => handleModify(order)}>Edit Order</button>
                 </div>
-            </div>   
+            </div>  
         )
     })
 
